@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZunoGames – Jogos Online Grátis</title>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6edff;--bg2:#ffd9ee;--gl:rgba(124,58,237,.28);--card:#fff;--fg:#1b1340;--mut:#645d8a;--line:rgba(27,19,64,.12);--a:#7c3aed;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0620;--bg2:#2a0f5e;--gl:rgba(192,132,252,.55);--card:rgba(34,20,80,.78);--fg:#f3f0ff;--mut:#a59fd0;--line:rgba(255,255,255,.1);--a:#a78bfa;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a0620;--bg2:#2a0f5e;--gl:rgba(192,132,252,.55);--card:rgba(34,20,80,.78);--fg:#f3f0ff;--mut:#a59fd0;--line:rgba(255,255,255,.1);--a:#a78bfa;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(900px 520px at 12% -8%,var(--bg2),transparent 70%),radial-gradient(800px 520px at 100% 8%,var(--gl),transparent 70%),var(--bg);background-attachment:fixed;color:var(--fg);font:500 16px/1.5 Fredoka,system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}
+.w{width:min(1120px,100% - 24px);margin:0 auto}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .w{display:flex;align-items:center;gap:14px;padding:10px 0;flex-wrap:wrap}
+.logo{font:400 30px/1 Bungee,Fredoka,sans-serif;filter:drop-shadow(0 0 10px var(--gl));letter-spacing:.04em;background:linear-gradient(90deg,#f43f5e,#f59e0b,#22c55e,#38bdf8,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo small{display:block;font:500 11px Fredoka,sans-serif;letter-spacing:.08em;color:var(--mut);-webkit-text-fill-color:var(--mut)}
+#q{flex:1;min-width:160px;max-width:380px;margin-left:auto;padding:9px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
+main{flex:1;padding:18px 0 30px}
+.hero{border-radius:22px;padding:26px;background:linear-gradient(120deg,#7c3aed,#ec4899 60%,#f59e0b);color:#fff;margin-bottom:18px}
+.hero h1{margin:0 0 6px;font-size:clamp(26px,5vw,42px);line-height:1.1}
+.hero p{margin:0 0 14px;opacity:.95;max-width:56ch}
+.st{display:flex;gap:8px;flex-wrap:wrap}.st span{background:rgba(255,255,255,.22);padding:4px 12px;border-radius:99px;font-size:14px}
+#cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 14px;cursor:pointer}
+.chip.on{background:var(--a);border-color:var(--a);color:#fff}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.gc{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
+.gc:hover{transform:translateY(-4px);box-shadow:0 10px 26px rgba(0,0,0,.2)}
+.th{height:110px;display:grid;place-items:center;font-size:54px}
+.gb{padding:12px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.gb b{font-size:18px}.gb small{color:var(--mut)}
+.tag{align-self:flex-start;font-size:12px;padding:1px 10px;border-radius:99px;background:color-mix(in srgb,var(--a) 18%,transparent);color:var(--a);font-weight:700}
+.dots{letter-spacing:2px;color:#f59e0b}
+.none{color:var(--mut);padding:20px 0}
+#about{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+#about h2{margin:0 0 6px}#about p{margin:6px 0;color:var(--mut)}
+.back{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 16px;cursor:pointer;margin-bottom:12px}
+#gv{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+#gv h1{margin:0 0 8px;font-size:clamp(26px,4vw,36px)}
+#bar{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:14px 14px 0 0;padding:8px 14px;flex-wrap:wrap}
+#hud{font-weight:700}
+.btn{background:var(--a);color:#fff;border:0;border-radius:99px;padding:6px 18px;cursor:pointer;font-weight:700}
+#stage{position:relative;background:#0e1424;color:#f3f0ff;border-radius:0 0 16px 16px;padding:12px;min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.cv{max-width:100%;height:auto;border-radius:10px;touch-action:none;background:#000}
+#ov{position:absolute;inset:0;background:rgba(8,6,22,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;border-radius:inherit;padding:14px;z-index:2}
+#ov p{margin:0;font:700 26px Fredoka,sans-serif}
+.hidden{display:none!important}
+#info{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+#info h3{margin:12px 0 2px;font-size:14px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}#info h3:first-child{margin-top:0}
+#info p{margin:0}
+.mem,.g4,.ttt,.moles{display:grid;gap:8px;width:min(100%,380px)}
+.mem,.g4{grid-template-columns:repeat(4,1fr)}.ttt,.moles{grid-template-columns:repeat(3,1fr)}
+.card,.g4 div,.ttt button,.hole{aspect-ratio:1;border-radius:14px;border:0;display:grid;place-items:center}
+.card{background:linear-gradient(135deg,#7c3aed,#ec4899);font-size:clamp(24px,7vw,40px);cursor:pointer}
+.card.up{background:#f3f0ff}.card.ok{background:#bbf7d0}
+.g4 div{background:#2a2350;font:700 clamp(18px,5vw,30px) Fredoka,sans-serif;color:#1b1340}
+.ttt button{background:#2a2350;font:700 clamp(36px,12vw,64px) Fredoka,sans-serif;cursor:pointer;color:#fff}
+.ttt .X{color:#38bdf8}.ttt .O{color:#f472b6}
+.st2{margin:0;font-weight:700;font-size:18px}
+.hole{background:radial-gradient(circle at 50% 70%,#2b1a0e 35%,#6b4423 70%);font-size:clamp(30px,10vw,54px);cursor:pointer;transition:filter .1s}.hole.hit{filter:brightness(2)}
+.quiz{width:min(100%,520px)}.quiz h3{margin:0 0 12px;font-size:20px}
+.opts{display:grid;gap:8px}
+.opt{padding:10px 14px;border-radius:12px;border:2px solid #4b3f86;background:#1a1438;color:#f3f0ff;text-align:left;cursor:pointer}
+.opt.ok{background:#15803d;border-color:#22c55e}.opt.no{background:#b91c1c;border-color:#ef4444}
+footer{border-top:1px solid var(--line);padding:16px 0;color:var(--mut);font-size:14px}
+footer .w{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.sim{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(100%,320px)}.sim button{aspect-ratio:1;border:0;border-radius:20px;opacity:.55;cursor:pointer;transition:opacity .1s,transform .1s}.sim .lit{opacity:1;transform:scale(1.04);filter:brightness(1.4)}
+.num{width:min(100%,220px);padding:10px 14px;border-radius:12px;border:2px solid #4b3f86;background:#1a1438;color:#f3f0ff;font:700 22px Fredoka,sans-serif;text-align:center}
+.big{margin:0;font:700 clamp(28px,8vw,48px) Fredoka,sans-serif}
+.rps{display:flex;gap:10px}.rps button{font-size:clamp(34px,10vw,56px);width:clamp(72px,22vw,110px);aspect-ratio:1;border-radius:20px;border:0;background:#2a2350;cursor:pointer}
+
+.hero{background:linear-gradient(120deg,#7c3aed,#ec4899,#f59e0b,#7c3aed);background-size:300% 100%;animation:hg 12s linear infinite;box-shadow:0 10px 50px var(--gl)}@keyframes hg{to{background-position:-300% 0}}
+.hero h1,#gv h1{font-family:Bungee,Fredoka,sans-serif;font-weight:400}.hero h1{font-size:clamp(22px,4.4vw,36px)}#gv h1{font-size:clamp(20px,3.6vw,30px)}
+.gc{position:relative;backdrop-filter:blur(6px)}.gc:hover{box-shadow:0 0 0 2px var(--a),0 12px 40px var(--gl)}
+.th{position:relative;overflow:hidden;height:120px;font-size:60px;text-shadow:0 6px 20px rgba(0,0,0,.4)}.th::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);transform:translateX(-100%);transition:transform .6s}.gc:hover .th::after{transform:translateX(100%)}
+.new{position:absolute;top:8px;right:8px;background:#f43f5e;color:#fff;font:700 11px Fredoka,sans-serif;padding:2px 10px;border-radius:99px;box-shadow:0 0 12px #f43f5e}
+.chip.on{box-shadow:0 0 18px var(--gl)}#stage{box-shadow:0 0 40px var(--gl)}#about,#info{backdrop-filter:blur(6px)}
+.kb{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:420px}.key{width:38px;height:38px;border-radius:10px;border:0;background:#2a2350;color:#fff;font-weight:700;cursor:pointer}.key.ok{background:#15803d}.key.no{background:#b91c1c}.key:disabled{opacity:.6}
+.mn{display:grid;gap:3px;width:min(100%,420px)}.mc{aspect-ratio:1;border:0;border-radius:6px;background:#3a2f70;color:#fff;font:700 clamp(11px,3vw,18px) Fredoka,sans-serif;padding:0;cursor:pointer}.mc.op{background:#141029;cursor:default}.o1{color:#38bdf8}.o2{color:#4ade80}.o3{color:#f87171}.o4,.o5,.o6{color:#fbbf24}
+.rx{width:min(100%,380px);height:220px;border:0;border-radius:20px;font:700 22px Fredoka,sans-serif;color:#fff;background:#3b82f6;cursor:pointer;padding:12px}.rx.wait{background:#dc2626}.rx.go{background:#16a34a}
+.c4{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;width:min(100%,420px);background:#1d4ed8;padding:8px;border-radius:14px}.c4c{aspect-ratio:1;border-radius:50%;background:#0b1020;border:0;cursor:pointer;padding:0}.c4c.p1{background:#ef4444}.c4c.p2{background:#facc15}
+@media (max-width:860px){#gv{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="w"><a href="#" class="logo" aria-label="ZunoGames, página inicial">ZunoGames<small>JOGOS ONLINE</small></a><input id="q" type="search" placeholder="Pesquisar jogos…" aria-label="Pesquisar jogos"></div></header>
+<main class="w">
+  <section id="home">
+    <div class="hero"><h1>Os melhores jogos, grátis e sem instalar nada</h1><p>Escolhe uma categoria e começa a jogar logo. Funciona no computador e no telemóvel, e o teu recorde fica guardado.</p><div class="st"><span id="n1"></span><span id="n2"></span><span>3 níveis de dificuldade</span><span>Sem anúncios</span></div></div>
+    <div id="cats" role="group" aria-label="Categorias"></div>
+    <div id="grid"></div>
+    <section id="about"><h2>Sobre o projeto</h2><p>O <b>ZunoGames</b> é um portal de jogos online criado por <b>Tomás Cardoso</b> no âmbito do curso TGPSI (Técnico de Gestão e Programação de Sistemas Informáticos).</p><p>Versão 3.0, atualizada a <time datetime="2026-11-12">12 de novembro de 2026</time>. Feito com HTML, CSS e JavaScript, sem bibliotecas externas.</p></section>
+  </section>
+  <section id="game" class="hidden">
+    <button class="back" id="bk">← Todos os jogos</button>
+    <div id="gv">
+      <div><h1 id="gt"></h1><div class="seg" id="lv" role="group" aria-label="Dificuldade"></div>
+        <div id="bar"><span id="hud"></span><button class="btn" id="rs">Reiniciar</button></div>
+        <div id="stage"><div id="box"></div><div id="ov" class="hidden"><p></p><button class="btn" id="ag">Jogar outra vez</button></div></div></div>
+      <aside id="info"></aside>
+    </div>
+  </section>
+</main>
+<footer><div class="w"><span>© <time datetime="2026">2026</time> ZunoGames · Criado por <b>Tomás Cardoso</b></span><span>Atualizado a 12/11/2026 · Versão 3.0</span><b>Made by Cardoso</b></div></footer>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),rnd=n=>Math.floor(Math.random()*n),cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+const el=(t,c,p,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;if(p)p.append(e);return e};
+const sv=(k,v)=>{try{if(v===undefined)return +localStorage.getItem('tgpsi:'+k)||0;localStorage.setItem('tgpsi:'+k,v)}catch(e){return 0}};
+const cvs=(c,w,h)=>{const e=el('canvas','cv',c.box);e.width=w;e.height=h;return e};
+const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const GM=[
+{id:'cobra',n:'Cobra',ic:'🐍',cat:'Arcade',col:'#22c55e',d:2,desc:'O clássico da cobra: come, cresce e não batas.',how:'Come a comida vermelha para crescer. O jogo acaba se bateres nas paredes ou no teu corpo.',ctl:'Setas ou WASD. No telemóvel, desliza o dedo.',f:cobra},
+{id:'voa',n:'Voa Passarinho',ic:'🐦',cat:'Ação',col:'#38bdf8',d:3,desc:'Passa pelos canos sem tocar em nada.',how:'Mantém o pássaro no ar e passa pelas aberturas dos canos. Cada cano passado vale 1 ponto.',ctl:'Espaço, seta para cima ou toque no ecrã.',f:voa},
+{id:'pong',n:'Pong',ic:'🏓',cat:'Desporto',col:'#f97316',d:2,desc:'Ténis de mesa clássico contra o computador.',how:'Devolve a bola e marca pontos. Tens 5 vidas: perdes uma de cada vez que o CPU marca.',ctl:'Rato, dedo, W/S ou setas.',f:pong},
+{id:'2048',n:'2048',ic:'🔢',cat:'Puzzle',col:'#eab308',d:2,desc:'Junta números iguais e cria blocos maiores.',how:'Desliza os blocos. Quando dois blocos iguais se tocam, juntam-se e somam. Tenta chegar ao 2048.',ctl:'Setas, WASD ou desliza o dedo.',f:g2048},
+{id:'memoria',n:'Jogo da Memória',ic:'🧠',cat:'Puzzle',col:'#ec4899',d:1,desc:'Encontra todos os pares de cartas.',how:'Vira duas cartas de cada vez. Se forem iguais, ficam abertas. Quantas menos jogadas, mais pontos.',ctl:'Clica ou toca nas cartas.',f:memoria},
+{id:'galo',n:'Jogo do Galo',ic:'⭕',cat:'Estratégia',col:'#8b5cf6',d:2,desc:'Três em linha contra um CPU esperto.',how:'Tu és o X e começas. Faz três em linha. Vitória vale 10 pontos e empate 3. O CPU é difícil de bater.',ctl:'Clica ou toca numa casa.',f:galo},
+{id:'toupeira',n:'Caça à Toupeira',ic:'🔨',cat:'Reflexos',col:'#a16207',d:1,desc:'Acerta nas toupeiras antes que fujam.',how:'Tens 30 segundos. Clica nas toupeiras que aparecem. Vão ficando cada vez mais rápidas.',ctl:'Clica ou toca nos buracos.',f:toupeira},
+{id:'quiz',n:'Quiz de Cultura Geral',ic:'❓',cat:'Quiz',col:'#14b8a6',d:1,desc:'10 perguntas para testares o que sabes.',how:'Responde a 10 perguntas. Cada resposta certa vale 10 pontos. As perguntas mudam sempre.',ctl:'Clica ou toca na resposta.',f:quiz},
+{id:'simon',n:'Sequência de Cores',ic:'🎵',cat:'Memória',col:'#f43f5e',d:2,desc:'Repete a sequência de luzes que cresce a cada ronda.',how:'Observa a sequência e repete-a pela mesma ordem. A cada ronda é acrescentada mais uma cor. Pontos = rondas completas.',ctl:'Clica ou toca nas cores.',f:simon},
+{id:'adivinha',n:'Adivinha o Número',ic:'🎯',cat:'Lógica',col:'#06b6d4',d:1,desc:'Descobre o número secreto com poucas tentativas.',how:'Tenta adivinhar o número e segue as pistas de mais alto ou mais baixo. Fácil: 1 a 50. Normal: 1 a 100. Difícil: 1 a 1000.',ctl:'Escreve o número e carrega em Enter ou em Tentar.',f:adivinha},
+{id:'ppt',n:'Pedra, Papel, Tesoura',ic:'✂️',cat:'Sorte',col:'#f59e0b',d:1,desc:'O clássico contra o CPU. Perdes à terceira derrota.',how:'Escolhe pedra, papel ou tesoura. Pedra ganha à tesoura, tesoura ao papel e papel à pedra. Pontos = rondas ganhas.',ctl:'Clica ou toca numa jogada.',f:ppt},
+{id:'contas',n:'Contas Rápidas',ic:'🧮',cat:'Matemática',col:'#84cc16',d:2,desc:'Resolve o máximo de contas em 30 segundos.',how:'Responde às contas de somar, subtrair e multiplicar o mais depressa que puderes. Cada certa vale 1 ponto.',ctl:'Escreve o resultado e carrega em Enter ou em Responder.',f:contas},
+{id:'breakout',n:'Parede de Tijolos',ic:'🧱',cat:'Arcade',col:'#fb7185',d:2,nw:1,desc:'Parte todos os tijolos com a bola.',how:'Move a barra para a bola não cair e destrói todos os tijolos. Tens 3 vidas. Cada tijolo vale 10 pontos.',ctl:'Rato, dedo, setas ou A/D.',f:breakout},
+{id:'meteoros',n:'Chuva de Meteoros',ic:'☄️',cat:'Ação',col:'#6366f1',d:3,nw:1,desc:'Foge das rochas que caem do espaço.',how:'Move a nave e evita os meteoros o máximo de tempo possível. Cada segundo vale 10 pontos.',ctl:'Rato, dedo, setas ou A/D.',f:meteoros},
+{id:'quatro',n:'Quatro em Linha',ic:'🔴',cat:'Estratégia',col:'#3b82f6',d:2,nw:1,desc:'Junta quatro peças em linha antes do CPU.',how:'Escolhe uma coluna para largar a tua peça vermelha. Ganha quem fizer quatro em linha na horizontal, vertical ou diagonal.',ctl:'Clica ou toca numa coluna.',f:quatro},
+{id:'minas',n:'Campo Minado',ic:'💣',cat:'Lógica',col:'#64748b',d:3,nw:1,desc:'Descobre o campo sem pisar nas minas.',how:'Abre as casas seguras. Os números indicam quantas minas estão à volta. Usa bandeiras para marcar minas.',ctl:'Clica para abrir. Botão direito ou Modo bandeira para marcar.',f:minas},
+{id:'forca',n:'Jogo da Forca',ic:'🔤',cat:'Palavras',col:'#0ea5e9',d:2,nw:1,desc:'Adivinha a palavra letra a letra.',how:'Escolhe letras para descobrir a palavra escondida. Cada erro custa uma vida. Palavras mais longas no Difícil.',ctl:'Clica nas letras ou usa o teclado.',f:forca},
+{id:'digita',n:'Digitação Rápida',ic:'⌨️',cat:'Palavras',col:'#a855f7',d:2,nw:1,desc:'Escreve as palavras o mais depressa possível.',how:'Escreve a palavra mostrada. Ela avança sozinha quando acertas. Cada palavra vale 1 ponto.',ctl:'Teclado.',f:digita},
+{id:'reflexos',n:'Teste de Reflexos',ic:'⚡',cat:'Reflexos',col:'#facc15',d:1,nw:1,desc:'Mede a tua velocidade de reação.',how:'Espera que o botão fique verde e clica o mais depressa que conseguires. São 5 rondas. Se clicares cedo, repetes a ronda.',ctl:'Clica ou toca no botão.',f:reflexos}];
+const CATS=['Todos',...new Set(GM.map(g=>g.cat))];let cat='Todos',cur=null,ctx=null,LV=1;try{const x=localStorage.getItem('tgpsi:lv');if(x!==null)LV=cl(+x,0,2)}catch(e){}
+
+function mkctx(id0){const id=id0+'-'+LV,k=[];let dead=0;const best0=sv(id);
+ const c={box:$('#box'),best:best0,lv:LV,
+  on(t,e,f){t.addEventListener(e,f);k.push(()=>t.removeEventListener(e,f))},
+  to(f,ms){const i=setTimeout(()=>{if(!dead)f()},ms);k.push(()=>clearTimeout(i))},
+  iv(f,ms){const i=setInterval(()=>{if(!dead)f()},ms);k.push(()=>clearInterval(i))},
+  raf(f){let l=performance.now(),r;const s=n=>{if(dead)return;const dt=Math.min(.05,(n-l)/1000);l=n;f(dt);r=requestAnimationFrame(s)};r=requestAnimationFrame(s);k.push(()=>cancelAnimationFrame(r))},
+  sc(n,x){if(n>c.best){c.best=n;sv(id,n)}$('#hud').textContent='Pontos: '+n+(x?' · '+x:'')+' · Recorde: '+c.best},
+  over(t){$('#ov p').textContent=t;$('#ov').classList.remove('hidden')},
+  kill(){dead=1;k.forEach(f=>f())}};return c}
+function start(){if(ctx)ctx.kill();$('#box').innerHTML='';$('#ov').classList.add('hidden');ctx=mkctx(cur.id);ctx.sc(0);try{cur.f(ctx)}catch(e){$('#box').textContent='Erro ao carregar o jogo.'}}
+const mark=()=>[...$('#lv').children].forEach((b,i)=>b.classList.toggle('on',i==LV));
+['🟢 Fácil','🟡 Normal','🔴 Difícil'].forEach((t,i)=>{const b=el('button','chip',$('#lv'),t);b.onclick=()=>{LV=i;sv('lv',i);mark();if(cur)start()}});mark();
+$('#rs').onclick=start;$('#ag').onclick=start;$('#bk').onclick=()=>{location.hash=''};
+
+function home(){if(ctx){ctx.kill();ctx=null}cur=null;$('#game').classList.add('hidden');$('#home').classList.remove('hidden');document.title='ZunoGames – Jogos Online Grátis'}
+function open(g){cur=g;$('#home').classList.add('hidden');$('#game').classList.remove('hidden');document.title=g.n+' – ZunoGames';$('#gt').textContent=g.ic+' '+g.n;
+ $('#info').innerHTML='<h3>Categoria</h3><p>'+g.cat+'</p><h3>Desafio do jogo</h3><p class="dots">'+'●'.repeat(g.d)+'○'.repeat(3-g.d)+'</p><h3>Como jogar</h3><p>'+g.how+'</p><h3>Níveis</h3><p>Fácil, Normal e Difícil mudam a velocidade, o tamanho ou as regras. Cada nível tem o seu recorde.</p><h3>Controlos</h3><p>'+g.ctl+'</p><h3>Criado por</h3><p>Tomás Cardoso · 2026</p>';scrollTo(0,0);start()}
+function route(){const g=GM.find(x=>x.id==location.hash.slice(1));g?open(g):home()}
+
+function render(){const q=$('#q').value.trim().toLowerCase();const L=GM.filter(g=>(cat=='Todos'||g.cat==cat)&&(g.n+g.cat+g.desc).toLowerCase().includes(q));const gr=$('#grid');gr.innerHTML='';
+ L.forEach(g=>{const a=el('a','gc',gr);a.href='#'+g.id;a.innerHTML='<div class="th" style="background:linear-gradient(135deg,'+g.col+',#1b1340)">'+g.ic+'</div><div class="gb"><span class="tag">'+g.cat+'</span>'+(g.nw?'<span class="new">NOVO</span>':'')+'<b>'+g.n+'</b><small>'+g.desc+'</small><span class="dots" aria-label="Dificuldade '+g.d+' de 3">'+'●'.repeat(g.d)+'○'.repeat(3-g.d)+'</span><small>Recorde: '+Math.max(sv(g.id+'-0'),sv(g.id+'-1'),sv(g.id+'-2'))+'</small></div>'});
+ if(!L.length)el('p','none',gr,'Nenhum jogo encontrado.')}
+const cs=$('#cats');CATS.forEach(n=>{const b=el('button','chip'+(n==cat?' on':''),cs,n);b.onclick=()=>{cat=n;[...cs.children].forEach(x=>x.classList.toggle('on',x===b));render()}});
+$('#q').oninput=render;$('#n1').textContent=GM.length+' jogos';$('#n2').textContent=(CATS.length-1)+' categorias';
+
+/* ---------- JOGOS ---------- */
+function cobra(c){const cn=cvs(c,400,400),g=cn.getContext('2d');let s=[[10,10],[9,10],[8,10]],d=[1,0],nd=[1,0],fd,sc=0,t=0,end=0;
+ const nf=()=>{do fd=[rnd(20),rnd(20)];while(s.some(p=>p[0]==fd[0]&&p[1]==fd[1]))};nf();
+ const tn=(x,y)=>{if(x!=-d[0]||y!=-d[1])nd=[x,y]};
+ const M={arrowleft:[-1,0],a:[-1,0],arrowright:[1,0],d:[1,0],arrowup:[0,-1],w:[0,-1],arrowdown:[0,1],s:[0,1]};
+ c.on(document,'keydown',e=>{const m=M[e.key.toLowerCase()];if(m){e.preventDefault();tn(m[0],m[1])}});
+ let sx=0,sy=0;c.on(cn,'pointerdown',e=>{sx=e.clientX;sy=e.clientY});
+ c.on(cn,'pointerup',e=>{const dx=e.clientX-sx,dy=e.clientY-sy;if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;Math.abs(dx)>Math.abs(dy)?tn(dx>0?1:-1,0):tn(0,dy>0?1:-1)});
+ const draw=()=>{g.fillStyle='#0e1424';g.fillRect(0,0,400,400);g.fillStyle='#161e36';for(let i=0;i<20;i++)for(let j=0;j<20;j++)if((i+j)%2)g.fillRect(i*20,j*20,20,20);
+  g.fillStyle='#ef4444';g.beginPath();g.arc(fd[0]*20+10,fd[1]*20+10,8,0,7);g.fill();
+  s.forEach((p,i)=>{g.fillStyle=i?'#22c55e':'#86efac';g.beginPath();g.roundRect?g.roundRect(p[0]*20+1,p[1]*20+1,18,18,6):g.rect(p[0]*20+1,p[1]*20+1,18,18);g.fill()})};
+ c.raf(dt=>{if(end)return;t+=dt;if(t<Math.max(.05,[.15,.11,.075][c.lv]-sc*.002))return;t=0;d=nd;const h=[s[0][0]+d[0],s[0][1]+d[1]];if(c.lv==0){h[0]=(h[0]+20)%20;h[1]=(h[1]+20)%20}const eat=h[0]==fd[0]&&h[1]==fd[1];
+  if(h[0]<0||h[1]<0||h[0]>19||h[1]>19||(eat?s:s.slice(0,-1)).some(p=>p[0]==h[0]&&p[1]==h[1])){end=1;c.over('Fim de jogo! Pontos: '+sc);return}
+  s.unshift(h);if(eat){sc++;c.sc(sc);nf()}else s.pop();draw()});draw()}
+
+function voa(c){const cn=cvs(c,360,480),g=cn.getContext('2d');let y=220,v=0,P=[],t=1,sc=0,go=0,st=0;const G=[88,66,52][c.lv],S=[105,130,165][c.lv];
+ const fl=()=>{if(!go){st=1;v=-310}};
+ c.on(document,'keydown',e=>{const k=e.key.toLowerCase();if(k==' '||k=='arrowup'||k=='w'){e.preventDefault();fl()}});c.on(cn,'pointerdown',fl);
+ const die=()=>{go=1;c.over('Bateste! Pontos: '+sc)};
+ c.raf(dt=>{if(!go&&st){v+=950*dt;y+=v*dt;t+=dt;if(t>1.5){t=0;P.push({x:370,h:rnd(220)+90,p:0})}
+  P.forEach(p=>p.x-=S*dt);P=P.filter(p=>p.x>-60);
+  for(const p of P){if(!p.p&&p.x+50<80){p.p=1;sc++;c.sc(sc)}if(92>p.x&&68<p.x+50&&(y-12<p.h-G||y+12>p.h+G))die()}
+  if(y>428||y<12)die()}
+  const gr=g.createLinearGradient(0,0,0,480);gr.addColorStop(0,'#38bdf8');gr.addColorStop(1,'#e0f2fe');g.fillStyle=gr;g.fillRect(0,0,360,480);
+  g.fillStyle='#22c55e';P.forEach(p=>{g.fillRect(p.x,0,50,p.h-G);g.fillRect(p.x,p.h+G,50,480-p.h-G);g.fillStyle='#16a34a';g.fillRect(p.x-3,p.h-G-20,56,20);g.fillRect(p.x-3,p.h+G,56,20);g.fillStyle='#22c55e'});
+  g.fillStyle='#a16207';g.fillRect(0,440,360,40);g.fillStyle='#65a30d';g.fillRect(0,440,360,8);
+  g.fillStyle='#facc15';g.beginPath();g.arc(80,y,13,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(86,y-4,4,0,7);g.fill();g.fillStyle='#000';g.beginPath();g.arc(87,y-4,2,0,7);g.fill();g.fillStyle='#f97316';g.beginPath();g.moveTo(92,y);g.lineTo(102,y+3);g.lineTo(92,y+6);g.fill();
+  if(!st){g.fillStyle='#fff';g.font='700 24px Fredoka,sans-serif';g.textAlign='center';g.fillText('Toca para começar',180,140)}})}
+
+function pong(c){const cn=cvs(c,400,300),g=cn.getContext('2d');let py=150,cy=150,b,w=0,sc=0,ls=0,end=0;const K={};
+ const rs=dir=>{b={x:200,y:150,vx:dir*190,vy:rnd(2)?120:-120};w=.8};rs(1);
+ c.on(cn,'pointermove',e=>{const r=cn.getBoundingClientRect();py=cl((e.clientY-r.top)*300/r.height,35,265)});
+ const KM={arrowup:'u',w:'u',arrowdown:'d',s:'d'};
+ c.on(document,'keydown',e=>{const k=KM[e.key.toLowerCase()];if(k){e.preventDefault();K[k]=1}});c.on(document,'keyup',e=>{const k=KM[e.key.toLowerCase()];if(k)K[k]=0});
+ c.raf(dt=>{if(!end){py=cl(py+((K.d?1:0)-(K.u?1:0))*320*dt,35,265);
+  if(w>0)w-=dt;else{b.x+=b.vx*dt;b.y+=b.vy*dt}
+  const dy=b.y-cy;cy=cl(cy+Math.sign(dy)*Math.min(Math.abs(dy),[140,200,270][c.lv]*dt*(b.vx>0?1:.4)),35,265);
+  if(b.y<6){b.y=6;b.vy=Math.abs(b.vy)}if(b.y>294){b.y=294;b.vy=-Math.abs(b.vy)}
+  if(b.vx<0&&b.x-6<24&&b.x>8&&Math.abs(b.y-py)<41){b.x=31;b.vx=Math.min(420,-b.vx*1.06);b.vy=cl((b.y-py)*5.5,-300,300)}
+  if(b.vx>0&&b.x+6>376&&b.x<392&&Math.abs(b.y-cy)<41){b.x=369;b.vx=-Math.min(420,b.vx*1.06);b.vy=cl((b.y-cy)*5.5,-300,300)}
+  if(b.x>410){sc++;c.sc(sc,'Vidas: '+(5-ls));rs(1)}
+  if(b.x<-10){ls++;c.sc(sc,'Vidas: '+(5-ls));if(ls>=5){end=1;c.over('Fim! Pontos: '+sc)}else rs(-1)}}
+  g.fillStyle='#0f172a';g.fillRect(0,0,400,300);g.fillStyle='#334155';for(let i=0;i<300;i+=20)g.fillRect(198,i,4,10);
+  g.fillStyle='#38bdf8';g.fillRect(16,py-35,8,70);g.fillStyle='#f97316';g.fillRect(376,cy-35,8,70);g.fillStyle='#fff';g.beginPath();g.arc(b.x,b.y,6,0,7);g.fill()});
+ c.sc(0,'Vidas: 5')}
+
+function g2048(c){let b=Array(16).fill(0),sc=0;const gd=el('div','g4',c.box),T=[];for(let i=0;i<16;i++)T.push(el('div','',gd));
+ const add=()=>{const e=[];b.forEach((v,i)=>{if(!v)e.push(i)});b[e[rnd(e.length)]]=Math.random()<[.97,.9,.7][c.lv]?2:4};
+ const sl=r=>{const a=r.filter(v=>v);let g=0;for(let i=0;i<a.length-1;i++)if(a[i]==a[i+1]){a[i]*=2;g+=a[i];a.splice(i+1,1)}while(a.length<4)a.push(0);return[a,g]};
+ const can=()=>b.includes(0)||b.some((v,i)=>(i%4<3&&v==b[i+1])||(i<12&&v==b[i+4]));
+ const draw=()=>b.forEach((v,i)=>{const t=T[i];t.textContent=v||'';t.style.background=v?'hsl('+((Math.log2(v)*32+20)%360)+',75%,'+(v<8?72:60)+'%)':'#2a2350';t.style.color=v>4?'#fff':'#1b1340'});
+ const mv=d=>{let ch=0;for(let i=0;i<4;i++){const ix=[0,1,2,3].map(j=>d<2?i*4+j:j*4+i);if(d%2)ix.reverse();const[r,g]=sl(ix.map(k=>b[k]));ix.forEach((k,j)=>{if(b[k]!=r[j]){ch=1;b[k]=r[j]}});sc+=g}
+  if(ch){add();draw();c.sc(sc);if(!can())c.over('Sem jogadas! Pontos: '+sc)}};
+ const M={arrowleft:0,a:0,arrowright:1,d:1,arrowup:2,w:2,arrowdown:3,s:3};
+ c.on(document,'keydown',e=>{const m=M[e.key.toLowerCase()];if(m!==undefined){e.preventDefault();mv(m)}});
+ let sx=0,sy=0,dn=0;c.on(gd,'pointerdown',e=>{sx=e.clientX;sy=e.clientY;dn=1});
+ c.on(document,'pointerup',e=>{if(!dn)return;dn=0;const dx=e.clientX-sx,dy=e.clientY-sy;if(Math.max(Math.abs(dx),Math.abs(dy))<24)return;Math.abs(dx)>Math.abs(dy)?mv(dx>0?1:0):mv(dy>0?3:2)});
+ gd.style.touchAction='none';add();add();draw()}
+
+function memoria(c){const n=[6,8,10][c.lv],E=['🍎','🚀','⚽','🎸','🐱','🌟','🍕','🎲','🐶','🍩'].slice(0,n);let open=[],lock=0,mv=0,ok=0;const w=el('div','mem',c.box);
+ shuf([...E,...E]).forEach(e=>{const b=el('button','card',w);b.setAttribute('aria-label','Carta virada para baixo');
+  b.onclick=()=>{if(lock||b.classList.contains('up'))return;b.classList.add('up');b.textContent=e;open.push([b,e]);
+   if(open.length==2){mv++;c.sc(0,'Jogadas: '+mv);if(open[0][1]==open[1][1]){ok++;open.forEach(o=>o[0].classList.add('ok'));open=[];if(ok==n){const p=Math.max(0,100-(mv-n)*5);c.sc(p,'Jogadas: '+mv);c.over('Completaste em '+mv+' jogadas! Pontos: '+p)}}
+   else{lock=1;c.to(()=>{open.forEach(o=>{o[0].classList.remove('up');o[0].textContent=''});open=[];lock=0},700)}}}})}
+
+function galo(c){const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];let b=Array(9).fill(''),w=0,dr=0,bz=0;
+ const wn=b=>{for(const[l,m,n]of L)if(b[l]&&b[l]==b[m]&&b[m]==b[n])return b[l];return b.includes('')?null:'T'};
+ const mm=(b,p)=>{const r=wn(b);if(r=='O')return 1;if(r=='X')return -1;if(r=='T')return 0;let s=p=='O'?-2:2;for(let i=0;i<9;i++)if(!b[i]){b[i]=p;const v=mm(b,p=='O'?'X':'O');b[i]='';s=p=='O'?Math.max(s,v):Math.min(s,v)}return s};
+ const st=el('p','st2',c.box,'A tua vez (X)'),gd=el('div','ttt',c.box),B=[];
+ const draw=()=>b.forEach((v,i)=>{B[i].textContent=v;B[i].className=v});
+ const fin=r=>{bz=1;if(r=='X'){w++;st.textContent='Ganhaste! 🎉'}else if(r=='O')st.textContent='O CPU ganhou.';else{dr++;st.textContent='Empate.'}
+  c.sc(w*10+dr*3,'Vitórias: '+w+' · Empates: '+dr);c.to(()=>{b.fill('');bz=0;st.textContent='A tua vez (X)';draw()},1400)};
+ const mv=i=>{if(bz||b[i])return;b[i]='X';draw();let r=wn(b);if(r)return fin(r);bz=1;
+  c.to(()=>{const e=[];b.forEach((v,k)=>{if(!v)e.push(k)});let m;if(Math.random()<[.55,.2,0][c.lv])m=e[rnd(e.length)];else{let bs=-2;for(const k of e){b[k]='O';const v=mm(b,'X');b[k]='';if(v>bs){bs=v;m=k}}}
+   b[m]='O';draw();r=wn(b);if(r)return fin(r);bz=0},350)};
+ for(let i=0;i<9;i++){const x=el('button','',gd);x.setAttribute('aria-label','Casa '+(i+1));x.onclick=()=>mv(i);B.push(x)}}
+
+function toupeira(c){const gr=el('div','moles',c.box),H=[];let sc=0,tm=30,cur=-1,end=0,id=0;
+ for(let i=0;i<9;i++){const b=el('button','hole',gr);b.setAttribute('aria-label','Buraco '+(i+1));
+  b.onclick=()=>{if(end||i!=cur)return;sc++;cur=-1;b.textContent='';b.classList.add('hit');c.to(()=>b.classList.remove('hit'),150);c.sc(sc,'Tempo: '+tm+' s')};H.push(b)}
+ const up=()=>{if(end)return;let n;do n=rnd(9);while(n==cur);cur=n;const m=++id;H[n].textContent='🐹';
+  c.to(()=>{if(id==m&&cur==n){cur=-1;H[n].textContent=''}},Math.max(380,[1100,850,650][c.lv]-sc*12));c.to(up,Math.max(550,[1300,1000,800][c.lv]-sc*12))};
+ c.iv(()=>{if(end)return;tm--;c.sc(sc,'Tempo: '+tm+' s');if(tm<=0){end=1;cur=-1;H.forEach(h=>h.textContent='');c.over('Tempo! Acertaste '+sc+' toupeiras.')}},1000);
+ c.sc(0,'Tempo: 30 s');up()}
+
+function quiz(c){const Q=[['Qual é a capital de Portugal?','Lisboa','Porto','Coimbra','Faro'],['Quantos planetas tem o Sistema Solar?','8','7','9','10'],['Quem escreveu Os Lusíadas?','Luís de Camões','Fernando Pessoa','Eça de Queirós','Gil Vicente'],['Qual é o maior oceano do mundo?','Pacífico','Atlântico','Índico','Ártico'],['Em que ano foi a Revolução do 25 de Abril?','1974','1968','1975','1986'],['Qual é a fórmula química da água?','H₂O','CO₂','O₂','NaCl'],['Quantos jogadores de cada equipa estão em campo num jogo de futebol?','11','9','10','12'],['Qual é o maior planeta do Sistema Solar?','Júpiter','Saturno','Terra','Marte'],['Quem pintou a Mona Lisa?','Leonardo da Vinci','Picasso','Van Gogh','Michelangelo'],['Em que continente fica o Egito?','África','Ásia','Europa','América'],['Quem foi o primeiro homem a pisar a Lua?','Neil Armstrong','Yuri Gagarin','Buzz Aldrin','Elon Musk'],['Quem descobriu o caminho marítimo para a Índia?','Vasco da Gama','Pedro Álvares Cabral','Bartolomeu Dias','Fernão de Magalhães'],['Quanto é 12 × 12?','144','124','132','154']];
+ const qs=shuf(Q).slice(0,10);let i=0,sc=0,lock=0;const bx=el('div','quiz',c.box),qe=el('h3','',bx),ol=el('div','opts',bx);
+ const show=()=>{lock=0;qe.textContent=(i+1)+'/10 · '+qs[i][0];ol.innerHTML='';const o=shuf(qs[i].slice(1,[3,5,5][c.lv]).map((t,k)=>[t,k==0]));
+  o.forEach(([t,ok])=>{const b=el('button','opt',ol,t);b.onclick=()=>{if(lock)return;lock=1;if(ok){sc+=10;b.classList.add('ok')}else{b.classList.add('no');[...ol.children].forEach((x,j)=>{if(o[j][1])x.classList.add('ok')})}
+   c.sc(sc);c.to(()=>{i++;(i<10&&(ok||c.lv<2))?show():c.over('Acertaste '+sc/10+' de 10! Pontos: '+sc)},1000)}})};show()}
+
+function simon(c){const C=['#ef4444','#22c55e','#3b82f6','#eab308'],gd=el('div','sim',c.box),st=el('p','st2',c.box,'Observa…'),B=[];let sq=[],p=0,bz=1;const ms=[800,550,350][c.lv];
+ const fl=(i,d)=>{B[i].classList.add('lit');c.to(()=>B[i].classList.remove('lit'),d)};
+ const play=()=>{bz=1;p=0;st.textContent='Observa…';sq.push(rnd(4));sq.forEach((k,j)=>c.to(()=>fl(k,ms*.6),600+j*ms));c.to(()=>{bz=0;st.textContent='A tua vez!'},600+sq.length*ms)};
+ for(let i=0;i<4;i++){const b=el('button','',gd);b.style.background=C[i];b.setAttribute('aria-label','Cor '+(i+1));b.onclick=()=>{if(bz)return;fl(i,150);if(i==sq[p]){p++;if(p==sq.length){c.sc(sq.length);bz=1;c.to(play,700)}}else{bz=1;c.over('Falhaste! Chegaste à ronda '+sq.length)}};B.push(b)}
+ play()}
+function adivinha(c){const M=[50,100,1000][c.lv],n=1+rnd(M);let t=[10,7,10][c.lv];const st=el('p','st2',c.box,'Pensei num número de 1 a '+M+'. Tens '+t+' tentativas.'),inp=el('input','num',c.box),b=el('button','btn',c.box,'Tentar');inp.type='number';inp.setAttribute('aria-label','O teu palpite');
+ const go=()=>{const v=+inp.value;if(inp.value===''||v<1||v>M){st.textContent='Escreve um número entre 1 e '+M+'.';return}t--;inp.value='';
+  if(v==n){c.sc(t*10+10);c.over('Acertaste! Era o '+n+'. Pontos: '+(t*10+10))}else if(!t)c.over('Perdeste! Era o '+n+'.');else st.textContent=(v<n?'Mais alto ⬆️':'Mais baixo ⬇️')+' · Tentativas: '+t};
+ b.onclick=go;c.on(inp,'keydown',e=>{if(e.key=='Enter')go()});inp.focus()}
+function ppt(c){const O=['🪨','📄','✂️'],N=['Pedra','Papel','Tesoura'];let w=0,l=0,h=[0,0,0],bz=0;const st=el('p','st2',c.box,'Escolhe a tua jogada'),r=el('div','rps',c.box);
+ const go=p=>{if(bz)return;let q=rnd(3);if(c.lv==0&&Math.random()<.25)q=(p+2)%3;else if(c.lv==2&&Math.random()<.5)q=(h.indexOf(Math.max(...h))+1)%3;h[p]++;
+  const res=p==q?0:(p+1)%3==q?-1:1;if(res>0)w++;if(res<0)l++;st.textContent=O[p]+' vs '+O[q]+(res>0?' · Ganhaste!':res<0?' · Perdeste.':' · Empate.');c.sc(w,'CPU: '+l+'/3');
+  if(l>=3){bz=1;c.over('Fim! Ganhaste '+w+' rondas.')}};
+ O.forEach((o,i)=>{const b=el('button','',r,o);b.setAttribute('aria-label',N[i]);b.onclick=()=>go(i)});c.sc(0,'CPU: 0/3')}
+function contas(c){let sc=0,tm=30,ans=0,end=0;const L=c.lv,q=el('p','big',c.box),inp=el('input','num',c.box),b=el('button','btn',c.box,'Responder');inp.type='number';inp.setAttribute('aria-label','Resposta');
+ const nx=()=>{const x=1+rnd([10,20,50][L]),y=1+rnd([10,12,50][L]),o=rnd(L?3:2);if(o==0){q.textContent=x+' + '+y+' = ?';ans=x+y}else if(o==1){q.textContent=(x+y)+' − '+y+' = ?';ans=x}else{const a=1+rnd([5,10,12][L]);q.textContent=a+' × '+y+' = ?';ans=a*y}};
+ const go=()=>{if(end||inp.value==='')return;if(+inp.value===ans){sc++;c.sc(sc,'Tempo: '+tm+' s')}inp.value='';nx()};
+ b.onclick=go;c.on(inp,'keydown',e=>{if(e.key=='Enter')go()});
+ c.iv(()=>{if(end)return;tm--;c.sc(sc,'Tempo: '+tm+' s');if(tm<=0){end=1;c.over('Tempo! Acertaste '+sc+' contas.')}},1000);c.sc(0,'Tempo: 30 s');nx();inp.focus()}
+
+function breakout(c){const cn=cvs(c,400,420),g=cn.getContext('2d'),RW=[3,4,6][c.lv],sp=[230,290,350][c.lv],pw=[90,70,52][c.lv],br=[],K={};let px=200,b,sc=0,end=0,w=0,lv=3;
+ for(let r=0;r<RW;r++)for(let i=0;i<8;i++)br.push({x:i*50+3,y:40+r*22,a:1,h:'hsl('+(r*55)+',85%,60%)'});
+ const rs=()=>{b={x:200,y:340,vx:sp*.5*(rnd(2)?1:-1),vy:-sp*.8};w=.8};rs();
+ c.on(cn,'pointermove',e=>{const r=cn.getBoundingClientRect();px=cl((e.clientX-r.left)*400/r.width,pw/2,400-pw/2)});
+ const kk=(e,v)=>{const k=e.key.toLowerCase();if(k=='arrowleft'||k=='a'){K.l=v;e.preventDefault()}if(k=='arrowright'||k=='d'){K.r=v;e.preventDefault()}};
+ c.on(document,'keydown',e=>kk(e,1));c.on(document,'keyup',e=>kk(e,0));
+ c.raf(dt=>{if(!end){px=cl(px+((K.r?1:0)-(K.l?1:0))*380*dt,pw/2,400-pw/2);if(w>0)w-=dt;else{b.x+=b.vx*dt;b.y+=b.vy*dt}
+  if(b.x<6||b.x>394){b.vx=-b.vx;b.x=cl(b.x,6,394)}if(b.y<6){b.vy=Math.abs(b.vy);b.y=6}
+  if(b.vy>0&&b.y>385&&b.y<400&&Math.abs(b.x-px)<pw/2+6){b.vy=-Math.abs(b.vy);b.vx=(b.x-px)/(pw/2)*sp*.9;b.y=385}
+  for(const k of br)if(k.a&&b.x>k.x-6&&b.x<k.x+46&&b.y>k.y-6&&b.y<k.y+22){k.a=0;b.vy=-b.vy;sc+=10;c.sc(sc,'Vidas: '+lv);break}
+  if(!br.some(k=>k.a)){end=1;c.over('Limpaste tudo! Pontos: '+sc)}
+  if(b.y>430){lv--;c.sc(sc,'Vidas: '+lv);if(lv<=0){end=1;c.over('Fim! Pontos: '+sc)}else rs()}}
+  g.fillStyle='#0b1020';g.fillRect(0,0,400,420);br.forEach(k=>{if(k.a){g.fillStyle=k.h;g.fillRect(k.x,k.y,44,18)}});
+  g.fillStyle='#38bdf8';g.fillRect(px-pw/2,395,pw,10);g.fillStyle='#fff';g.beginPath();g.arc(b.x,b.y,6,0,7);g.fill()});c.sc(0,'Vidas: 3')}
+function meteoros(c){const cn=cvs(c,400,500),g=cn.getContext('2d'),K={},S=[140,190,250][c.lv],I=[.7,.5,.32][c.lv],ST=Array.from({length:40},()=>[rnd(400),rnd(500),Math.random()*2+.5]);let px=200,R=[],t=0,sp=0,sc=-1,end=0;
+ c.on(cn,'pointermove',e=>{const r=cn.getBoundingClientRect();px=cl((e.clientX-r.left)*400/r.width,14,386)});
+ const kk=(e,v)=>{const k=e.key.toLowerCase();if(k=='arrowleft'||k=='a'){K.l=v;e.preventDefault()}if(k=='arrowright'||k=='d'){K.r=v;e.preventDefault()}};
+ c.on(document,'keydown',e=>kk(e,1));c.on(document,'keyup',e=>kk(e,0));
+ c.raf(dt=>{ST.forEach(s=>{s[1]=(s[1]+s[2]*40*dt)%500});
+  if(!end){t+=dt;sp+=dt;px=cl(px+((K.r?1:0)-(K.l?1:0))*340*dt,14,386);if(sp>I){sp=0;R.push({x:rnd(400),y:-20,r:10+rnd(14),v:S+t*4+rnd(60)})}
+   R.forEach(r=>r.y+=r.v*dt);R=R.filter(r=>r.y<530);const n=Math.floor(t*10);if(n!=sc){sc=n;c.sc(sc)}
+   if(R.some(r=>Math.hypot(r.x-px,r.y-460)<r.r+11)){end=1;c.over('Atingido! Sobreviveste '+t.toFixed(1)+' s. Pontos: '+sc)}}
+  g.fillStyle='#070b1f';g.fillRect(0,0,400,500);g.fillStyle='#fff';ST.forEach(s=>g.fillRect(s[0],s[1],s[2],s[2]));
+  R.forEach(r=>{g.fillStyle='#94a3b8';g.beginPath();g.arc(r.x,r.y,r.r,0,7);g.fill();g.fillStyle='#64748b';g.beginPath();g.arc(r.x-r.r/3,r.y-r.r/3,r.r/3,0,7);g.fill()});
+  g.fillStyle='#38bdf8';g.beginPath();g.moveTo(px,446);g.lineTo(px-13,474);g.lineTo(px+13,474);g.fill();g.fillStyle='#fb923c';g.fillRect(px-4,474,8,6+rnd(6))})}
+function quatro(c){const b=Array.from({length:6},()=>Array(7).fill(0));let bz=0,end=0,mvs=0;const st=el('p','st2',c.box,'A tua vez (🔴)'),gd=el('div','c4',c.box),cells=[];
+ const row=k=>{for(let r=5;r>=0;r--)if(!b[r][k])return r;return -1};
+ const win=p=>{for(let r=0;r<6;r++)for(let k=0;k<7;k++)for(const[dr,dk]of[[0,1],[1,0],[1,1],[1,-1]]){let n=0;for(;n<4;n++){const y=r+dr*n,x=k+dk*n;if(y<0||y>5||x<0||x>6||b[y][x]!=p)break}if(n==4)return 1}return 0};
+ const draw=()=>cells.forEach((e,i)=>{const v=b[(i/7)|0][i%7];e.className='c4c'+(v?' p'+v:'')});
+ const can=(k,p)=>{const r=row(k);if(r<0)return 0;b[r][k]=p;const x=win(p);b[r][k]=0;return x};
+ const cpu=()=>{const V=[0,1,2,3,4,5,6].filter(k=>row(k)>=0);let m;if(c.lv>0){m=V.find(k=>can(k,2));if(m==null)m=V.find(k=>can(k,1))}
+  if(m==null&&c.lv==2){const sf=V.filter(k=>{const r=row(k);if(r<1)return 1;b[r][k]=2;const bad=can(k,1);b[r][k]=0;return !bad});if(sf.length)m=sf.sort((x,y)=>Math.abs(x-3)-Math.abs(y-3)||Math.random()-.5)[0]}
+  return m==null?V[rnd(V.length)]:m};
+ const done=p=>{end=1;if(p==1){const s=Math.max(5,30-mvs)*(c.lv+1);c.sc(s);c.over('Ganhaste! Pontos: '+s)}else if(p==2)c.over('O CPU ganhou.');else c.over('Empate!')};
+ const play=(k,p)=>{b[row(k)][k]=p;draw();if(win(p))done(p);else if(b[0].every(v=>v))done(0)};
+ for(let i=0;i<42;i++){const e=el('button','c4c',gd);e.setAttribute('aria-label','Coluna '+(i%7+1));e.onclick=()=>{const k=i%7;if(bz||end||row(k)<0)return;mvs++;play(k,1);if(end)return;bz=1;st.textContent='O CPU está a pensar…';c.to(()=>{play(cpu(),2);bz=0;st.textContent='A tua vez (🔴)'},450)};cells.push(e)}}
+function minas(c){const[n,m]=[[8,8],[10,15],[12,30]][c.lv];let mi=null,op=0,fm=0,end=0,t=0,tmr=0,fl=0;const bt=el('button','btn',c.box,'🚩 Modo bandeira: não'),gd=el('div','mn',c.box),B=[];gd.style.gridTemplateColumns='repeat('+n+',1fr)';
+ const nb=i=>{const r=[],x=i%n,y=(i-x)/n;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const a=x+dx,b=y+dy;if((dx||dy)&&a>=0&&b>=0&&a<n&&b<n)r.push(b*n+a)}return r};
+ const open=i=>{const q=[i];while(q.length){const k=q.pop(),x=B[k];if(x.o||x.f)continue;x.o=1;op++;const v=nb(k).filter(j=>mi[j]).length;x.textContent=v||'';x.className='mc op o'+v;if(!v)q.push(...nb(k))}};
+ const hit=(i,flag)=>{if(end)return;const x=B[i];
+  if(flag){if(!x.o){x.f=!x.f;x.textContent=x.f?'🚩':'';fl+=x.f?1:-1;c.sc(0,'Minas: '+(m-fl))}return}
+  if(x.f||x.o)return;
+  if(!mi){mi=Array(n*n).fill(0);const ex=[i,...nb(i)];let k=0;while(k<m){const r=rnd(n*n);if(!mi[r]&&!ex.includes(r)){mi[r]=1;k++}}tmr=1}
+  if(mi[i]){end=1;B.forEach((y,j)=>{if(mi[j])y.textContent='💣'});c.over('💥 Boom! Pisaste numa mina.');return}
+  open(i);if(op==n*n-m){end=1;const p=m*10+Math.max(0,200-t);c.sc(p);c.over('Limpaste o campo! Pontos: '+p)}};
+ for(let i=0;i<n*n;i++){const x=el('button','mc',gd);x.setAttribute('aria-label','Casa '+(i+1));x.onclick=()=>hit(i,fm);x.oncontextmenu=e=>{e.preventDefault();hit(i,1)};B.push(x)}
+ bt.onclick=()=>{fm=!fm;bt.textContent='🚩 Modo bandeira: '+(fm?'sim':'não')};c.iv(()=>{if(tmr&&!end)t++},1000);c.sc(0,'Minas: '+m)}
+function forca(c){const W=[['gato','casa','bola','mesa','livro','praia','carro','peixe'],['janela','estrela','escola','floresta','cadeira','amizade','montanha'],['computador','elefante','aeroporto','borboleta','chocolate','universidade','laboratorio']][c.lv],w=W[rnd(W.length)];let L=[8,6,5][c.lv],end=0;const g=new Set(),hd=el('p','big',c.box),st=el('p','st2',c.box),kb=el('div','kb',c.box),B={};
+ const up=()=>{hd.textContent=[...w].map(x=>g.has(x)?x.toUpperCase():'_').join(' ');st.textContent='Vidas: '+'❤️'.repeat(L)};
+ const pk=x=>{if(end||g.has(x))return;g.add(x);B[x].disabled=true;if(w.includes(x))B[x].classList.add('ok');else{L--;B[x].classList.add('no')}up();
+  if([...w].every(y=>g.has(y))){end=1;const p=L*10+w.length;c.sc(p);c.over('Acertaste! A palavra era '+w.toUpperCase()+'. Pontos: '+p)}else if(!L){end=1;c.over('Perdeste! A palavra era '+w.toUpperCase())}};
+ 'abcdefghijklmnopqrstuvwxyz'.split('').forEach(x=>{const b=el('button','key',kb,x.toUpperCase());b.onclick=()=>pk(x);B[x]=b});
+ c.on(document,'keydown',e=>{const k=e.key.toLowerCase();if(/^[a-z]$/.test(k)&&!e.ctrlKey&&!e.metaKey)pk(k)});up()}
+function digita(c){const P=[['sol','mar','bola','gato','casa','lua','rio','pato','mesa','vida'],['estrela','janela','escola','amigos','chuva','camisola','jardim','cidade'],['computador','aventura','borboleta','campeonato','chocolate','biblioteca','temperatura','sobremesa']][c.lv];let sc=0,tm=[45,30,20][c.lv],w='',end=0;
+ const q=el('p','big',c.box),inp=el('input','num',c.box);inp.type='text';inp.autocomplete='off';inp.autocapitalize='off';inp.spellcheck=false;inp.setAttribute('aria-label','Escreve a palavra');
+ const nx=()=>{let x;do x=P[rnd(P.length)];while(x==w);w=x;q.textContent=w};
+ c.on(inp,'input',()=>{if(inp.value.trim().toLowerCase()==w){sc++;inp.value='';c.sc(sc,'Tempo: '+tm+' s');nx()}});
+ c.iv(()=>{if(end)return;tm--;c.sc(sc,'Tempo: '+tm+' s');if(tm<=0){end=1;inp.disabled=true;c.over('Tempo! Escreveste '+sc+' palavras.')}},1000);c.sc(0,'Tempo: '+tm+' s');nx();inp.focus()}
+function reflexos(c){const D=[[1000,3000],[1500,4000],[2000,6000]][c.lv];let r=0,T=[],st=0,t0=0,tk=0;const b=el('button','rx',c.box,'Clica para começar'),info=el('p','st2',c.box,'Rondas: 0/5');
+ const arm=()=>{st=1;const m=++tk;b.className='rx wait';b.textContent='Espera pelo verde…';c.to(()=>{if(m!=tk)return;st=2;b.className='rx go';b.textContent='CLICA!';t0=performance.now()},D[0]+rnd(D[1]-D[0]))};
+ b.onclick=()=>{if(st==0)return arm();if(st==1){tk++;st=0;b.className='rx';b.textContent='Cedo demais! Clica para tentar outra vez';return}
+  if(st==2){const ms=Math.round(performance.now()-t0);T.push(ms);r++;info.textContent='Rondas: '+r+'/5 · Última: '+ms+' ms';
+   if(r==5){st=3;const a=Math.round(T.reduce((x,y)=>x+y)/5),p=Math.max(0,1000-a);c.sc(p);c.over('Média: '+a+' ms. Pontos: '+p)}else{st=0;b.className='rx';b.textContent=ms+' ms! Clica para a próxima ronda'}}};
+ c.sc(0)}
+
+addEventListener('hashchange',route);render();route();
+})();
+</script>
+</body>
+</html>
